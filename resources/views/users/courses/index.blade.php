@@ -38,7 +38,14 @@
                 </div>
                 <div class="px-3 pt-3 py-2 flex justify-end gap-3">
                     @if(auth()->user()->gpa_average <= $course->gpa_requirement)
-                    <span class="text-red-500 p-2"> GPA Average not enough </span>
+                        <span class="text-red-500 p-2"> GPA Average not enough </span>
                     @else
-                    <x-button variant="black"> Enroll Course </x-button>
+                        <x-button variant="black"> Enroll Course </x-button>
                     @endif
+                </div>
+            </x-form.card>
+            @empty
+            @endforelse
+        </div>
+    </x-form.card>
+</x-app-layout>
