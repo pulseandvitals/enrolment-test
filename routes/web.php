@@ -3,7 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ReplyController;
 use App\Models\Course;
 
 /*
@@ -31,20 +34,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware('auth')->prefix('post')->name('post.')->group(function() {
+    Route::get('/create',[PostController::class,'create'])->name('create');
+    Route::post('/store',[PostController::class,'store'])->name('store');
+    Route::get('/list',[PostController::class,'index'])->name('index');
 
-Route::middleware('auth')->prefix('collection')->name('collection.')->group(function () {
+    Route::prefix('comment')->name('comment.')->group(function() {
+        Route::post('/store/{post}',[CommentController::class,'store'])->name('store');
 
-    Route::get('/',[CollectionController::class,'index'])->name('list');
-    Route::get('/create',[CollectionController::class,'create'])->name('create');
-    Route::post('/store',[CollectionController::class,'store'])->name('store');
-
-});
-Route::middleware('auth')->prefix('course')->name('course.')->group(function() {
-
-    Route::get('/list',[CourseController::class,'index'])->name('list');
-    Route::get('/create',[CourseController::class,'create'])->name('create');
-    Route::post('/store',[CourseController::class,'store'])->name('store');
-
+        Route::prefix('reply')->name('reply.')->group(function() {
+            Route::post('/store/{comment}',[ReplyController::class,'store'])->name('store');
+        });
+    });
 });
 
 require __DIR__ . '/auth.php';

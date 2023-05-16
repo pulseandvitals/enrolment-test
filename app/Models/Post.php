@@ -5,20 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CollectionFile extends Model
+class Post extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'file_name',
-        'file_url',
-        'collection_id',
-        'order',
-        'uuid',
         'user_id',
+        'content',
+        'name',
     ];
 
-    public function user()
+    public function comments()
     {
-        return $this->BelongsTo(User::class,'user_id');
+        return $this->HasMany(Comment::class,'parent_post_id');
     }
 }

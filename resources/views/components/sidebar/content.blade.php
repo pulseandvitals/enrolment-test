@@ -15,46 +15,24 @@
     </x-sidebar.link>
 
     <x-sidebar.dropdown
-        title="My Collection"
-        :active="Str::startsWith(request()->route()->uri(), 'collection')"
+        title="Post"
+        :active="Str::startsWith(request()->route()->uri(), 'Post')"
     >
         <x-slot name="icon">
             <x-heroicon-o-view-grid class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
         </x-slot>
         <x-sidebar.sublink
-            title="List"
-            href="{{ route('collection.list') }}"
-            :active="request()->routeIs('collection.list')"
+            title="Create"
+            href="{{ route('post.create') }}"
+            :active="request()->routeIs('post.create')"
         />
         <x-sidebar.sublink
-            title="Create"
-            href="{{ route('collection.create') }}"
-            :active="request()->routeIs('collection.create')"
+            title="List"
+            href="{{ route('post.index') }}"
+            :active="request()->routeIs('post.index')"
         />
 
     </x-sidebar.dropdown>
-
-    <x-sidebar.dropdown
-    title="Courses"
-    :active="Str::startsWith(request()->route()->uri(), 'course')"
->
-    <x-slot name="icon">
-        <x-heroicon-o-view-grid class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
-    </x-slot>
-    <x-sidebar.sublink
-        title="List"
-        href="{{ route('course.list') }}"
-        :active="request()->routeIs('collection.list')"
-    />
-    @if(auth()->user()->role == 'Admin')
-    <x-sidebar.sublink
-        title="Create"
-        href="{{ route('course.create') }}"
-        :active="request()->routeIs('collection.create')"
-    />
-    @endif
-
-</x-sidebar.dropdown>
 
     <div
         x-transition
